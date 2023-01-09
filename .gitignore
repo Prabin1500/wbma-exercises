@@ -1,6 +1,9 @@
 node_modules/
 .expo/
 dist/
+.editorconfig/
+.eslintrc.js/
+.prettierrc/
 npm-debug.*
 *.jks
 *.p8
