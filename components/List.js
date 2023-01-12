@@ -33,11 +33,20 @@ const List = () => {
   console.log('List, mediaArray', mediaArray);
 
   return(
-    <FlatList
+    <FlatList style={styles.container}
       data={mediaArray}
       keyExtractor={(item, index) => index.toString()}
       renderItem={({item}) => <ListItem  singleMedia={item} /> }
     />
   )
-}
+};
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: '#fff',
+    marginTop: Platform.OS === 'android' ? 30: 0,
+  },
+});
+
 export default List;
