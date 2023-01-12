@@ -1,18 +1,22 @@
 
-import { StyleSheet, FlatList, TouchableOpacity} from 'react-native';
+import { FlatList} from 'react-native';
 import { useMedia } from '../hooks/ApiHooks';
-import {baseUrl} from '../utils/variables'
 import ListItem from './ListItem';
+import PropTypes from 'prop-types';
 
-const List = () => {
+const List = ({navigation}) => {
   const {mediaArray} = useMedia();
 
   return(
     <FlatList
       data={mediaArray}
       keyExtractor={(item, index) => index.toString()}
-      renderItem={({item}) => <ListItem  singleMedia={item} /> }
+      renderItem={({item}) => <ListItem navigation={navigation} singleMedia={item} /> }
     />
   )
-}
+};
+
+List.propTypes = {
+  navigation : PropTypes.object,
+};
 export default List;
