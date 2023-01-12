@@ -1,4 +1,5 @@
 import { Image, StyleSheet, View, TouchableOpacity, Text } from 'react-native';
+import { uploadsUrl } from '../utils/variables';
 
 const ListItem = ({singleMedia}) =>{
   const item = singleMedia;
