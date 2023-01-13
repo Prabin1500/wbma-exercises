@@ -28,7 +28,7 @@ const styles = StyleSheet.create({
   row: {
     flexDirection: 'row',
     backgroundColor : '#ccc',
-    marginBottomf : 10,
+    marginBottom : 10,
   },
   box : {
     flex : 1,
@@ -36,7 +36,7 @@ const styles = StyleSheet.create({
   },
   image :{
     flex : 1,
-    minHeight: 100,
+    minHeight: 150,
   },
   listTitle : {
     fontWeight : 'bold',
