@@ -49,7 +49,7 @@ const List = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: '#000000',
     marginTop: Platform.OS === 'android' ? 30: 0,
   },
 });
