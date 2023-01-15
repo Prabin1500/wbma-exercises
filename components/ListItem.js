@@ -1,7 +1,6 @@
 import { Image, StyleSheet, View, TouchableOpacity, Text } from 'react-native';
 import PropTypes from 'prop-types';
 import { uploadsUrl } from '../utils/variables';
-import { Dimensions } from 'react-native'
 
 const ListItem = ({singleMedia, navigation}) =>{
   const item = singleMedia;
@@ -29,15 +28,14 @@ const styles = StyleSheet.create({
   row: {
     flexDirection: 'row',
     backgroundColor : '#ccc',
-    marginBottom:10,
-    width: Dimensions.get('window').width,
+    marginBottom : 10,
   },
   box : {
     flex : 1,
     padding:10,
   },
   image :{
-    flex: 1,
+    flex : 1,
     minHeight: 150,
   },
   listTitle : {
