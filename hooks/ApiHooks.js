@@ -1,6 +1,16 @@
 import { useEffect, useState } from 'react';
 import { baseUrl } from '../utils/variables';
 
+
+const doFetch = async (url, options) => {
+    const response = await fetch(url, options);
+    const json = await response.json();
+    if(!response.ok){
+      throw new Error(json.error || json.message);
+    }
+
+    return json;
+};
 const useMedia = () => {
   const [mediaArray, setMediaArray] = useState([]);
 
@@ -21,6 +31,14 @@ const useMedia = () => {
     };
 
   };
+
+  const useAuthentication = () => {
+    const postLogin = async (userCredentials) => {
+      const options = {
+
+      }
+    }
+  }
 
   useEffect(() => {
     loadmedia();
