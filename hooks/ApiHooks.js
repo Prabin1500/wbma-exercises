@@ -26,7 +26,7 @@ const useAuthentication = () => {
       return await doFetch(baseUrl + 'login', options);
 
     } catch (error) {
-      throw new Error (error.message);
+      throw new Error('postLogin: ' + error.message);
     }
   };
   return {postLogin}
@@ -48,9 +48,24 @@ const useUser = () => {
     }
   };
 
-  return {getUserByToken};
- };
+  const postUser = async (userData) => {
+    const options = {
+      method : 'post',
+      headers : {
+        'Content-Type' : 'application/json',
+      },
+      body : JSON.stringify(userData),
+    };
+    try {
+      return await doFetch(baseUrl + 'users', options);
 
+    } catch (error) {
+      throw new Error ('Post User: ' +error.message);
+    }
+  };
+
+  return {getUserByToken, postUser};
+};
 
 const useMedia = () => {
   const [mediaArray, setMediaArray] = useState([]);

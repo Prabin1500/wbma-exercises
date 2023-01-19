@@ -1,16 +1,19 @@
 import React, { useContext } from 'react'
-import PropTypes from 'prop-types'
 import { Text, View, Button, TextInput } from 'react-native';
 import { MainContext } from '../contexts/MainContext';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useAuthentication } from '../hooks/ApiHooks';
 import { Controller, useForm } from 'react-hook-form';
 
-const LoginForm = (props) => {
-  const {setIsLoggedIn} = useContext(MainContext);
+const LoginForm = () => {
+  const {setIsLoggedIn, setUser} = useContext(MainContext);
   const {postLogin} = useAuthentication();
-  const {control, handleSubmit, formState: {errors}} = useForm({
-    defaultValues:{username: '', password: ''}
+  const {
+    control,
+    handleSubmit,
+    formState: {errors},
+  } = useForm({
+    defaultValues: {username: '', password: ''}
   });
 
   const logIn = async (loginData) => {
@@ -20,9 +23,10 @@ const LoginForm = (props) => {
       const loginResult = await postLogin(loginData);
       console.log('login', loginResult);
       await AsyncStorage.setItem('userToken', loginResult.token);
+      setUser(loginResult.user);
       setIsLoggedIn(true);
     } catch (error){
-      console.error('logIn', error);
+      console.error('logIn:', error);
     }
 
   };
@@ -31,36 +35,37 @@ const LoginForm = (props) => {
       <Text>Login Form</Text>
       <Controller
         control={control}
-        rules={{
-          required:true, minLength:3
-        }}
-        render={({field: {onChange, onBlur, value}}) =>(
+        rules={{required: true, minLength: 3}}
+        render={({field: {onChange, onBlur, value}}) => (
           <TextInput
-            placeholder='Username'
+            placeholder="Username"
             onBlur={onBlur}
-            onChange={onChange}
+            onChangeText={onChange}
             value={value}
           />
         )}
-        name='Username'
+        name="username"
       />
-
+      {errors.username?.type === 'required' && <Text>is required</Text>}
+      {errors.username?.type === 'minLength' && (
+        <Text>min length is 3 characters</Text>
+      )}
       <Controller
         control={control}
-        rules={{ required:true, minLength:5 }}
-        render={({field: {onChange, onBlur, value}}) =>(
+        rules={{required: true, minLength: 5}}
+        render={({field: {onChange, onBlur, value}}) => (
           <TextInput
-            placeholder='Password'
+            placeholder="Password"
             onBlur={onBlur}
-            onChange={onChange}
+            onChangeText={onChange}
             value={value}
             secureTextEntry={true}
           />
         )}
-        name='Password'
+        name="password"
       />
-      {errors.password && <Text>Password not valid</Text>}
-      <Button title="Sign in" onPress={handleSubmit(logIn)}/>
+      {errors.password && <Text>Password (min. 5 chars) is required .</Text>}
+      <Button title="Sign in!" onPress={handleSubmit(logIn)} />
     </View>
   );
 };
