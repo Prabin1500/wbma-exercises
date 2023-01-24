@@ -1,9 +1,7 @@
 import React, { useContext } from 'react'
 import PropTypes from 'prop-types'
-import { Text, View, Button, TextInput } from 'react-native';
-import { MainContext } from '../contexts/MainContext';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import { useAuthentication, useUser } from '../hooks/ApiHooks';
+import {Card, Button, Text, Input} from '@rneui/themed';
+import {  useUser } from '../hooks/ApiHooks';
 import { Controller, useForm } from 'react-hook-form';
 
 const RegisterForm = () => {
@@ -26,13 +24,13 @@ const RegisterForm = () => {
 
   };
   return (
-    <View>
-      <Text>Registeration Form</Text>
+    <Card>
+      <Card.Title>Registeration Form</Card.Title>
       <Controller
         control={control}
         rules={{required: true, minLength: 3}}
         render={({field: {onChange, onBlur, value}}) => (
-          <TextInput
+          <Input
             placeholder="Username"
             onBlur={onBlur}
             onChangeText={onChange}
@@ -49,7 +47,7 @@ const RegisterForm = () => {
         control={control}
         rules={{required: true, minLength: 5}}
         render={({field: {onChange, onBlur, value}}) => (
-          <TextInput
+          <Input
             placeholder="Password"
             onBlur={onBlur}
             onChangeText={onChange}
@@ -64,7 +62,7 @@ const RegisterForm = () => {
         control={control}
         rules={{required: true}}
         render={({field: {onChange, onBlur, value}}) => (
-          <TextInput
+          <Input
             placeholder="Email"
             onBlur={onBlur}
             onChangeText={onChange}
@@ -78,7 +76,7 @@ const RegisterForm = () => {
         control={control}
         rules={{minLength: 3}}
         render={({field: {onChange, onBlur, value}}) => (
-          <TextInput
+          <Input
             placeholder="Full name"
             onBlur={onBlur}
             onChangeText={onChange}
@@ -92,7 +90,7 @@ const RegisterForm = () => {
       )}
 
       <Button title="Sign in!" onPress={handleSubmit(register)} />
-    </View>
+    </Card>
   );
 };
 

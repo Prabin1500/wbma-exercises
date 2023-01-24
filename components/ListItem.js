@@ -1,50 +1,32 @@
-import { Image, StyleSheet, View, TouchableOpacity, Text } from 'react-native';
+
+import {ListItem as RNEListItem} from '@rneui/themed';
 import PropTypes from 'prop-types';
 import { uploadsUrl } from '../utils/variables';
+import { Avatar } from '@rneui/base/dist/Avatar/Avatar';
+import { ListItemBase } from '@rneui/base/dist/ListItem/ListItem';
+import { ListItemButtonGroup } from '@rneui/base/dist/ListItem/ListItem.ButtonGroup';
+import {ButtonGroup } from '@rneui/base';
 
 const ListItem = ({singleMedia, navigation}) =>{
   const item = singleMedia;
   return(
-    <TouchableOpacity
-      style={styles.row}
+    <RNEListItem topDivider
       onPress={() =>
         navigation.navigate('Single', item)
     }>
-      <View style = {styles.box}>
-        <Image
-          style={styles.image}
-          source={{uri: uploadsUrl + item.thumbnails?.w160}}>
-        </Image>
-      </View>
-      <View style={styles.box}>
-        <Text style={styles.listTitle}>{item.title}</Text>
-        <Text style={styles.description}>{item.description}</Text>
-      </View>
-    </TouchableOpacity>
+      <Avatar source={{uri: uploadsUrl + item.thumbnails?.w160}} />
+
+      <RNEListItem.Content>
+        <RNEListItem.Title>{item.title}</RNEListItem.Title>
+        <RNEListItem.Subtitle numberOfLines={2}>
+          {item.description}
+        </RNEListItem.Subtitle>
+      </RNEListItem.Content>
+
+    </RNEListItem>
+
   );
 };
-
-const styles = StyleSheet.create({
-  row: {
-    flexDirection: 'row',
-    backgroundColor : '#ccc',
-    marginBottom : 10,
-  },
-  box : {
-    flex : 1,
-    padding:10,
-  },
-  image :{
-    flex : 1,
-    minHeight: 150,
-  },
-  listTitle : {
-    fontWeight : 'bold',
-    fontSize : 20,
-    paddingBottom: 15,
-  },
-
-});
 
 ListItem.propTypes = {
   singleMedia: PropTypes.object,

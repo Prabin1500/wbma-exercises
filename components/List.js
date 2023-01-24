@@ -1,6 +1,5 @@
 import {
   FlatList,
-  StyleSheet,
 } from 'react-native';
 
 import { useMedia } from '../hooks/ApiHooks.js';
