@@ -65,7 +65,7 @@ const LoginForm = () => {
         name="password"
       />
       {errors.password && <Text>Password (min. 5 chars) is required .</Text>}
-      <Button title="Sign in!" onPress={handleSubmit(logIn)} />
+      <Button title="Log in" onPress={handleSubmit(logIn)} />
     </Card>
   );
 };
