@@ -11,6 +11,7 @@ const RegisterForm = () => {
   const {
     control,
     handleSubmit,
+    getValues,
     formState: {errors},
   } = useForm({
     defaultValues:{username: '', password: '', email:'', full_name:''},
@@ -66,7 +67,6 @@ const RegisterForm = () => {
         )}
         name="username"
       />
-      {errors.username?.type === 'required' && <Text>is required</Text>}
       {errors.username?.type === 'minLength' && (
         <Text>min length is 3 characters</Text>
       )}
@@ -95,43 +95,26 @@ const RegisterForm = () => {
         )}
         name="password"
       />
-      {errors.password && <Text>Password (min. 5 chars) is required .</Text>}
 
       <Controller
         control={control}
         rules={{
-          required: {
-            value: true,
-            message: 'min 5 characters, one number and one uppercase letter',
+          required:{
+            value : true,
+            message:'Email is required',
           },
           pattern: {
-            value : /(?=.*\p{Lu})(?=.*[0-9]).{5,}/u,
-            message: 'min 5 characters, one number and one uppercase letter',
+            value : /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w\w+)+$/,
+            message: 'Provide valid email address',
           }
         }}
-
-        render={({field: {onChange, onBlur, value}}) => (
-          <Input
-            placeholder="Confirm Password"
-            onBlur={onBlur}
-            onChangeText={onChange}
-            value={value}
-            secureTextEntry={true}
-            errorMessage={errors.password && errors.password.message}
-          />
-        )}
-        name="Confirm Password"
-      />
-
-      <Controller
-        control={control}
-        rules={{required: true}}
         render={({field: {onChange, onBlur, value}}) => (
           <Input
             placeholder="Email"
             onBlur={onBlur}
             onChangeText={onChange}
             value={value}
+            errorMessage={errors.email && errors.email.message}
           />
         )}
         name="email"
