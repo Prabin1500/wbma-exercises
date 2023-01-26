@@ -14,11 +14,12 @@ const RegisterForm = () => {
     getValues,
     formState: {errors},
   } = useForm({
-    defaultValues:{username: '', password: '', email:'', full_name:''},
+    defaultValues:{username: '', password: '', confirmPassword: '', email:'', full_name:''},
     mode:'onBlur',
   });
 
   const register = async (registerData) => {
+    delete registerData.confirmPassword;
     console.log('Register data', registerData);
     try{
       const registerResult = await postUser(registerData);
@@ -70,6 +71,7 @@ const RegisterForm = () => {
       {errors.username?.type === 'minLength' && (
         <Text>min length is 3 characters</Text>
       )}
+
       <Controller
         control={control}
         rules={{
@@ -99,6 +101,32 @@ const RegisterForm = () => {
       <Controller
         control={control}
         rules={{
+          validate: (value) => {
+            if(value === getValues('password')) {
+              return true;
+            }else {
+              return 'Password do not match';
+            }
+
+          },
+        }}
+
+        render={({field: {onChange, onBlur, value}}) => (
+          <Input
+            placeholder="Confirm Password"
+            onBlur={onBlur}
+            onChangeText={onChange}
+            value={value}
+            secureTextEntry={true}
+            errorMessage={errors.confirmPassword && errors.confirmPassword.message}
+          />
+        )}
+        name="confirmPassword"
+      />
+
+      <Controller
+        control={control}
+        rules={{
           required:{
             value : true,
             message:'Email is required',
@@ -119,10 +147,10 @@ const RegisterForm = () => {
         )}
         name="email"
       />
-      {errors.email?.type === 'required' && <Text>is required</Text>}
+
       <Controller
         control={control}
-        rules={{minLength: 3}}
+        rules={{minLength: {value:3, message: 'must be at least 3 characters'}}}
         render={({field: {onChange, onBlur, value}}) => (
           <Input
             placeholder="Full name"
@@ -130,6 +158,7 @@ const RegisterForm = () => {
             onChangeText={onChange}
             value={value}
             autoCapitalize='words'
+            errorMessage={errors.full_name && errors.full_name.message}
           />
         )}
         name="full_name"

@@ -11,7 +11,7 @@ import { useUser } from '../hooks/ApiHooks';
 import LoginForm from '../components/LoginForm';
 import RegisterForm from '../components/RegisterForm';
 import KeyboardAvoidingView from 'react-native/Libraries/Components/Keyboard/KeyboardAvoidingView';
-import { Button, Text} from '@rneui/base';
+import { Button, Card, Text} from '@rneui/base';
 
 const Login = ({navigation}) => {
   const {setIsLoggedIn, setUser} = useContext(MainContext);
@@ -48,6 +48,8 @@ const Login = ({navigation}) => {
         behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
       >
         {toggleForm ? <LoginForm /> : <RegisterForm />}
+
+        <Card>
         <Text>{toggleForm ? 'Don\'t have an accout. Register here.' : 'Already have an account. Go to login.'}</Text>
         <Button
           title={toggleForm ? 'Register' : 'Login'}
@@ -55,6 +57,7 @@ const Login = ({navigation}) => {
             setToggleForm(!toggleForm);
           }}
         ></Button>
+        </Card>
 
       </KeyboardAvoidingView>
     </TouchableOpacity>
