@@ -101,7 +101,24 @@ const useMedia = () => {
     loadmedia();
   }, []);
 
-  return {mediaArray};
+  const postMedia = async(fileData,token) => {
+    const options = {
+      method : 'post',
+      headers : {
+        'x-access-token': token,
+        'Content-Type' : 'multipart/form-data',
+      },
+      body : fileData,
+    };
+    try {
+      return await doFetch(baseUrl + 'media', options);
+
+    } catch (error) {
+      throw new Error('postUpload: ' + error.message);
+    }
+  };
+
+  return {mediaArray, postMedia};
 };
 
 const useTag = () => {
