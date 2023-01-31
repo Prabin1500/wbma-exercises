@@ -1,5 +1,5 @@
 import List from "../components/List"
-import {Platform, StyleSheet, SafeAreaView} from "react-native";
+import {StyleSheet, SafeAreaView} from "react-native";
 import PropTypes from 'prop-types';
 
 const Home = ({navigation}) => {

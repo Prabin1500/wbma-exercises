@@ -1,16 +1,18 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Button, Card, Input } from '@rneui/base';
 import PropTypes from 'prop-types';
-import { useState } from 'react';
+import { useState, useContext } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { ActivityIndicator, Alert } from 'react-native';
 import { useMedia } from '../hooks/ApiHooks';
+import * as ImagePicker from 'expo-image-picker';
+import { MainContext } from '../contexts/MainContext';
 
 const Upload = ({navigation}) => {
   const {postMedia} = useMedia();
   const [mediaFile, setMediaFile] = useState({});
   const [loading, setLoading] = useState(false);
-  const {update, setUpdate} = useState(true);
+  const {update, setUpdate} = useContext(MainContext);
   const {
     control,
     handleSubmit,
@@ -63,13 +65,13 @@ const Upload = ({navigation}) => {
     console.log(result);
 
     if (!result.canceled) {
-      setImage(result.assets[0].uri);
+      setMediaFile(result.assets[0]);
     }
   };
 
   return(
     <Card>
-      <Card.Image source={{uri:image.uri || 'http://placekitten.com/200/300'}} />
+      <Card.Image source={{uri:mediaFile.uri || 'http://placekitten.com/200/300'}} />
       <Controller
         control={control}
         rules={{required: {value : true, message: 'Title cannot be empty'}}}
@@ -97,9 +99,15 @@ const Upload = ({navigation}) => {
         )}
         name="description"
       />
-      {loading && <ActivityIndicator size='large'/>}
+
       <Button title='Pick a file' onPress={pickFile} />
-      <Button disabled={!mediaFile.uri} title='upload' onPress={handleSubmit(uploadFile)} />
+
+      <Button
+        disabled={!mediaFile.uri}
+        title='upload'
+        onPress={handleSubmit(uploadFile)}
+      />
+      {loading && <ActivityIndicator size='large'/>}
     </Card>
   );
 };
