@@ -11,7 +11,7 @@ const Single = ({route}) => {
       <Card.Divider />
       <Card.Image  source={{uri: uploadsUrl + filename}} />
       <ListItem>
-        <Text> Uploaded at: {timeAdded}</Text>
+        <Text> Uploaded at: {new Date(timeAdded).toLocaleString('fi-FI')}</Text>
       </ListItem>
       <ListItem>
         <Text>{description}</Text>

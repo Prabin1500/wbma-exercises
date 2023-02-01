@@ -43,6 +43,7 @@ const LoginForm = () => {
             onChangeText={onChange}
             value={value}
             errorMessage={errors.username && errors.username.message}
+            autoCapitalize='none'
           />
         )}
         name="username"
