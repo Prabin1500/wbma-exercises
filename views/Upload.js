@@ -177,7 +177,7 @@ const Upload = ({navigation}) => {
         title='upload'
         onPress={handleSubmit(uploadFile)}
       />
-
+      {loading && <ActivityIndicator size='large' />}
       <Button title={'Reset'} onPress={resetForm} type='outline' />
 
     </Card>
