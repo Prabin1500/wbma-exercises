@@ -185,7 +185,7 @@ const useFavourite = () => {
 
   const getFavouritesByFileId = async(fileId) => {
     try{
-      return await doFetch(baseUrl + 'favourites/files/' + fileId);
+      return await doFetch(baseUrl + 'favourites/file/' + fileId);
     }catch(error){
       throw new Error('getFavouriteByFileId: ', error.message);
     }

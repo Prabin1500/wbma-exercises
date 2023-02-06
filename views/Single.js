@@ -29,14 +29,14 @@ const Single = ({route}) => {
 
   const getOwnerInfo = async () => {
     const token = await AsyncStorage.getItem('userToken');
-    const owner = setOwner(getUserById(userId, token));
-    console.log(owner)
+    const owner = await getUserById(userId, token);
+    console.log(owner.full_name)
     setOwner(owner);
   };
 
   const getLikes = async() => {
     const likes = await getFavouritesByFileId(fileId)
-    console.log('likes ' + likes)
+    console.log('likes ' + likes.getLikes)
     setLikes(likes);
   };
 
@@ -105,7 +105,7 @@ const Single = ({route}) => {
         <ListItem>
           <Icon name="person" />
           <Text>
-            Prabin
+          {owner.username} ({owner.full_name})
           </Text>
         </ListItem>
         <ListItem>
