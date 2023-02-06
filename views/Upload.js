@@ -1,16 +1,18 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Button, Card, Input } from '@rneui/base';
 import PropTypes from 'prop-types';
-import { useState, useContext, useCallback } from 'react';
+import { useState, useContext, useCallback, useRef } from 'react';
 import { Controller, useForm } from 'react-hook-form';
-import { ActivityIndicator, Alert } from 'react-native';
+import { Alert } from 'react-native';
 import { useMedia, useTag } from '../hooks/ApiHooks';
 import * as ImagePicker from 'expo-image-picker';
 import { MainContext } from '../contexts/MainContext';
 import { appId } from '../utils/variables';
 import { useFocusEffect } from '@react-navigation/native';
+import { Video } from 'expo-av';
 
 const Upload = ({navigation}) => {
+  const video = useRef(null);
   const {postMedia} = useMedia();
   const [mediaFile, setMediaFile] = useState({});
   const [loading, setLoading] = useState(false);
@@ -114,7 +116,16 @@ const Upload = ({navigation}) => {
   return(
     <Card>
         {mediaFile.type === 'video' ? (
-          <Card.Title>Video</Card.Title>
+          <Video
+            ref={video}
+            source={{uri: uploadsUrl + filename}}
+            style={{width:'100%',height:200}}
+            useNativeControls
+            resizeMode="contain"
+            onError={(error) => {
+              console.log(error);
+            }}
+          />
         ):(
           <Card.Image
             source={{
@@ -177,7 +188,6 @@ const Upload = ({navigation}) => {
         title='upload'
         onPress={handleSubmit(uploadFile)}
       />
-      {loading && <ActivityIndicator size='large' />}
       <Button title={'Reset'} onPress={resetForm} type='outline' />
 
     </Card>
