@@ -6,8 +6,10 @@ import { useState } from 'react/cjs/react.development';
 import { MainContext } from '../contexts/MainContext';
 import { useTag } from '../hooks/ApiHooks';
 import { uploadsUrl } from '../utils/variables';
+import PropTypes from 'prop-types';
+import MyFiles from './MyFiles';
 
-const Profile = () => {
+const Profile = ({navigation}) => {
 
   const{getFilesByTag} = useTag();
   const {setIsLoggedIn, user, setUser} = useContext(MainContext);
@@ -57,8 +59,18 @@ const Profile = () => {
         }}
        />
 
+       <Button
+          title="MyFiles"
+          onPress={() =>{
+          navigation.navigate('MyFiles');
+       }} />
+
     </Card>
   );
+};
+
+Profile.propTypes = {
+  navigation : PropTypes.object,
 };
 
 export default Profile;

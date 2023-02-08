@@ -86,15 +86,20 @@ const useUser = () => {
   return {getUserByToken, postUser, checkUsername, getUserById};
 };
 
-const useMedia = () => {
+const useMedia = (myFilesOnly) => {
   const [mediaArray, setMediaArray] = useState([]);
-  const {update} = useContext(MainContext);
+  const {update, user} = useContext(MainContext);
 
   const loadmedia = async() => {
     try{
       //const response = await fetch(baseUrl + 'media');
       //const json = await response.json();
-      const json = await useTag().getFilesByTag(appId);
+      let json = await useTag().getFilesByTag(appId);
+
+      if(myFilesOnly){
+        json = json.filter((file) => file.user_id === user.user_id);
+      }
+
       json.reverse();
       const media = await Promise.all(
         json.map(async (file) => {
@@ -127,11 +132,40 @@ const useMedia = () => {
       return await doFetch(baseUrl + 'media', options);
 
     } catch (error) {
-      throw new Error('postUpload: ' + error.message);
+      throw new Error('post Media: ' + error.message);
     }
   };
 
-  return {mediaArray, postMedia};
+  const deleteMedia = async (id, token) => {
+    try {
+      return await doFetch(baseUrl + 'media/' + id, {
+        headers : {'x-access-token': token},
+        method : 'delete',
+      });
+    } catch (error) {
+      throw new Error('delete Media ' + error.message);
+
+    };
+  };
+
+  const putMedia = async (id, data, token) => {
+    const options = {
+      method : 'put',
+      headers : {
+        'x-access-token': token,
+        'Content-Type' : 'application/json',
+      },
+      body : JSON.stringify(data),
+    };
+    try {
+      return await doFetch(baseUrl + 'media/' + id, options);
+
+    } catch (error) {
+      throw new Error('put Media: ' + error.message);
+    }
+  };
+
+  return {mediaArray, postMedia, deleteMedia, putMedia};
 };
 
 const useTag = () => {

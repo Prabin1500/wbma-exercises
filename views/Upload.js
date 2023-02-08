@@ -197,6 +197,6 @@ const Upload = ({navigation}) => {
 
 Upload.propTypes = {
   navigation : PropTypes.object,
-}
+};
 
 export default Upload;
