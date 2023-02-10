@@ -51,7 +51,7 @@ const ListItem = ({singleMedia, navigation}) =>{
             rounded
             onPress = {(index) => {
               if(index === 0){
-                console.log("Modify pressed")
+                navigation.navigate('Modify', {file: item});
               }else{
                 doDelete();
               }

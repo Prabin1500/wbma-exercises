@@ -7,7 +7,6 @@ import { MainContext } from '../contexts/MainContext';
 import { useTag } from '../hooks/ApiHooks';
 import { uploadsUrl } from '../utils/variables';
 import PropTypes from 'prop-types';
-import MyFiles from './MyFiles';
 
 const Profile = ({navigation}) => {
 

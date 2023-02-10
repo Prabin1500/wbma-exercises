@@ -118,7 +118,7 @@ const Upload = ({navigation}) => {
         {mediaFile.type === 'video' ? (
           <Video
             ref={video}
-            source={{uri: uploadsUrl + filename}}
+            source={{uri: mediaFile.uri}}
             style={{width:'100%',height:200}}
             useNativeControls
             resizeMode="contain"

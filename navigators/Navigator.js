@@ -5,8 +5,8 @@ import Home from '../views/Home';
 import Profile from '../views/Profile';
 import Login from '../views/Login';
 import Single from '../views/Single';
+import Modify from '../views/Modify';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import Ionicons from 'react-native-vector-icons/Ionicons';
 import { MainContext } from '../contexts/MainContext';
 import Upload from '../views/Upload';
 import { Icon } from '@rneui/base';
@@ -54,6 +54,7 @@ const StackScreen = () => {
             options={{headerShown : false}} />
           <Stack.Screen name='Single' component={Single} />
           <Stack.Screen name='MyFiles' component={MyFiles} />
+          <Stack.Screen name='Modify' component={Modify} />
         </>
       ) : (
         <Stack.Screen name='Login' component={Login}></Stack.Screen>
